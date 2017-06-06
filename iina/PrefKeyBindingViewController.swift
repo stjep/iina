@@ -11,8 +11,8 @@ import MASPreferences
 
 class PrefKeyBindingViewController: NSViewController, MASPreferencesViewController {
 
-  override var nibName: String? {
-    return "PrefKeyBindingViewController"
+  override var nibName: NSNib.Name? {
+    return NSNib.Name("PrefKeyBindingViewController")
   }
 
   override var identifier: String? {
@@ -187,7 +187,7 @@ class PrefKeyBindingViewController: NSViewController, MASPreferencesViewControll
           return
         }
       } else {
-        NSWorkspace.shared().activateFileViewerSelecting([URL(fileURLWithPath: newFilePath)])
+        NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: newFilePath)])
         return
       }
     }
@@ -234,7 +234,7 @@ class PrefKeyBindingViewController: NSViewController, MASPreferencesViewControll
           return
         }
       } else {
-        NSWorkspace.shared().activateFileViewerSelecting([URL(fileURLWithPath: newFilePath)])
+        NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: newFilePath)])
         return
       }
     }
@@ -259,7 +259,7 @@ class PrefKeyBindingViewController: NSViewController, MASPreferencesViewControll
 
   @IBAction func revealConfFileAction(_ sender: AnyObject) {
     let url = URL(fileURLWithPath: currentConfFilePath)
-    NSWorkspace.shared().activateFileViewerSelecting([url])
+    NSWorkspace.shared.activateFileViewerSelecting([url])
   }
 
   @IBAction func deleteConfFileAction(_ sender: AnyObject) {
@@ -280,7 +280,7 @@ class PrefKeyBindingViewController: NSViewController, MASPreferencesViewControll
   }
 
   @IBAction func displayRawValueAction(_ sender: NSButton) {
-    displayRawValues = sender.state == NSOnState
+    displayRawValues = sender.state == .onState
     kbTableView.doubleAction = displayRawValues ? nil : #selector(editRow)
     kbTableView.reloadData()
   }

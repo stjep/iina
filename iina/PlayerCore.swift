@@ -994,7 +994,7 @@ class PlayerCore: NSObject {
       let pause = mpvController.getFlag(MPVOption.PlaybackControl.pause)
       info.isPaused = pause
       DispatchQueue.main.async {
-        mw.updatePlayButtonState(pause ? NSOffState : NSOnState)
+        mw.updatePlayButtonState(pause ? .offState : .onState)
         if #available(OSX 10.12.2, *) {
           mw.updateTouchBarPlayBtn()
         }
@@ -1008,7 +1008,7 @@ class PlayerCore: NSObject {
     case .muteButton:
       let mute = mpvController.getFlag(MPVOption.Audio.mute)
       DispatchQueue.main.async {
-        mw.muteButton.state = mute ? NSOnState : NSOffState
+        mw.muteButton.state = mute ? .onState : .offState
       }
 
     case .chapterList:

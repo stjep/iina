@@ -49,7 +49,7 @@ class AboutWindowController: NSWindowController {
 
   @IBAction func creditsBtnAction(_ sender: Any) {
     guard let path = Bundle.main.path(forResource: "Credits", ofType: "rtf") else { return }
-    NSWorkspace.shared().openFile(path)
+    NSWorkspace.shared.openFile(path)
   }
 
 }

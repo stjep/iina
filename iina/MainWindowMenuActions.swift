@@ -195,7 +195,7 @@ extension MainWindowController {
   }
 
   @IBAction func menuToggleDeinterlace(_ sender: NSMenuItem) {
-    playerCore.toggleDeinterlace(sender.state != NSOnState)
+    playerCore.toggleDeinterlace(sender.state != .onState)
   }
 
   @IBAction func menuChangeWindowSize(_ sender: NSMenuItem) {

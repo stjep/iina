@@ -156,7 +156,7 @@ class QuickSettingViewController: NSViewController, NSTableViewDataSource, NSTab
       cropSegment.selectedSegment = index
     }
     rotateSegment.selectSegment(withTag: AppData.rotations.index(of: playerCore.info.rotation) ?? -1)
-    deinterlaceCheckBtn.state = playerCore.info.deinterlace ? NSOnState : NSOffState
+    deinterlaceCheckBtn.state = playerCore.info.deinterlace ? .onState : .offState
     let speed = playerCore.mpvController.getDouble(MPVOption.PlaybackControl.speed)
     customSpeedTextField.doubleValue = speed
     let sliderValue = log(speed / AppData.minSpeed) / log(AppData.maxSpeed / AppData.minSpeed) * sliderSteps
@@ -430,7 +430,7 @@ class QuickSettingViewController: NSViewController, NSTableViewDataSource, NSTab
   }
 
   @IBAction func deinterlaceBtnAction(_ sender: AnyObject) {
-    playerCore.toggleDeinterlace(deinterlaceCheckBtn.state == NSOnState)
+    playerCore.toggleDeinterlace(deinterlaceCheckBtn.state == .onState)
   }
 
   @IBAction func equalizerSliderAction(_ sender: NSSlider) {

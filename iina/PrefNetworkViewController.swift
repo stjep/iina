@@ -10,8 +10,8 @@ import Cocoa
 
 class PrefNetworkViewController: NSViewController {
 
-  override var nibName: String? {
-    return "PrefNetworkViewController"
+  override var nibName: NSNib.Name? {
+    return NSNib.Name("PrefNetworkViewController")
   }
 
   override var identifier: String? {

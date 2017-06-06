@@ -93,7 +93,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     reloadData(playlist: true, chapters: true)
 
     let loopStatus = playerCore.mpvController.getString(MPVOption.PlaybackControl.loopPlaylist)
-    loopBtn.state = (loopStatus == "inf" || loopStatus == "force") ? NSOnState : NSOffState
+    loopBtn.state = (loopStatus == "inf" || loopStatus == "force") ? .onState : .offState
   }
 
   deinit {
@@ -526,7 +526,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
       urls.append(URL(fileURLWithPath: playerCore.info.playlist[index].filename))
     }
     playlistTableView.deselectAll(nil)
-    NSWorkspace.shared().activateFileViewerSelecting(urls)
+    NSWorkspace.shared.activateFileViewerSelecting(urls)
   }
 
   @IBAction func contextMenuAddSubtitle(_ sender: NSMenuItem) {

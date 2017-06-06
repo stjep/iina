@@ -435,7 +435,7 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         }
       }
     }
-    let changeWorkspaceObserver = NSWorkspace.shared().notificationCenter.addObserver(forName: NSNotification.Name.NSWorkspaceActiveSpaceDidChange, object: nil, queue: .main) { [unowned self] _ in
+    let changeWorkspaceObserver = NSWorkspace.shared.notificationCenter.addObserver(forName: NSNotification.Name.NSWorkspaceActiveSpaceDidChange, object: nil, queue: .main) { [unowned self] _ in
       if self.isInFullScreen && self.ud.bool(forKey: PK.blackOutMonitor) {
         if self.window?.isOnActiveSpace ?? false {
           self.removeBlackWindow()
@@ -1749,12 +1749,12 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
 
   func updateVolume() {
     volumeSlider.doubleValue = playerCore.info.volume
-    muteButton.state = playerCore.info.isMuted ? NSOnState : NSOffState
+    muteButton.state = playerCore.info.isMuted ? .onState : .offState
   }
 
   func updatePlayButtonState(_ state: Int) {
     playButton.state = state
-    if state == NSOffState {
+    if state == .offState {
       speedValueIndex = AppData.availableSpeedValues.count / 2
       leftArrowLabel.isHidden = true
       rightArrowLabel.isHidden = true
@@ -1781,10 +1781,10 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
 
   /** Play button: pause & resume */
   @IBAction func playButtonAction(_ sender: NSButton) {
-    if sender.state == NSOnState {
+    if sender.state == .onState {
       playerCore.togglePause(false)
     }
-    if sender.state == NSOffState {
+    if sender.state == .offState {
       playerCore.togglePause(true)
       // speed is already reset by playerCore
       speedValueIndex = AppData.availableSpeedValues.count / 2
@@ -1901,8 +1901,8 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         rightArrowLabel.stringValue = String(format: "%.0fx", speedValue)
       }
       // if is paused
-      if playButton.state == NSOffState {
-        updatePlayButtonState(NSOnState)
+      if playButton.state == .offState {
+        updatePlayButtonState(.onState)
         playerCore.togglePause(false)
       }
 

@@ -8,29 +8,12 @@
 
 import Cocoa
 import PromiseKit
+import MASPreferences
 
 class PrefSubViewController: NSViewController {
 
-  override var nibName: String? {
-    return "PrefSubViewController"
-  }
-
-  override var identifier: String? {
-    get {
-      return "sub"
-    }
-    set {
-      super.identifier = newValue
-    }
-  }
-
-  var toolbarItemImage: NSImage {
-    return NSImage(named: NSImageNameFontPanel)!
-  }
-
-  var toolbarItemLabel: String {
-    view.layoutSubtreeIfNeeded()
-    return NSLocalizedString("preference.subtitle", comment: "Subtitles")
+  override var nibName: NSNib.Name? {
+    return NSNib.Name("PrefSubViewController")
   }
 
   var hasResizableWidth: Bool = false
@@ -97,14 +80,14 @@ class PrefSubViewController: NSViewController {
   }
 
   @IBAction func OpenSubHelpBtnAction(_ sender: AnyObject) {
-    NSWorkspace.shared().open(URL(string: AppData.wikiLink.appending("/Download-Online-Subtitles#opensubtitles"))!)
+    NSWorkspace.shared.open(URL(string: AppData.wikiLink.appending("/Download-Online-Subtitles#opensubtitles"))!)
   }
 }
 
 
 extension PrefSubViewController: NSTokenFieldDelegate {
 
-  func tokenField(_ tokenField: NSTokenField, styleForRepresentedObject representedObject: Any) -> NSTokenStyle {
+  func tokenField(_ tokenField: NSTokenField, styleForRepresentedObject representedObject: Any) -> NSTokenField.TokenStyle {
     return .rounded
   }
 
@@ -228,4 +211,26 @@ class SubLangToken: NSObject {
     return NSLocalizedString((username.length == 0 ? "general.login" : "general.logout"), comment: "")
   }
   
+}
+
+
+extension PrefSubViewController: MASPreferencesViewController {
+
+  override var identifier: String? {
+    get {
+      return "sub"
+    }
+    set {
+      super.identifier = newValue
+    }
+  }
+
+  var toolbarItemImage: NSImage {
+    return NSImage(named: NSImage.Name.fontPanel)!
+  }
+
+  var toolbarItemLabel: String {
+    view.layoutSubtreeIfNeeded()
+    return NSLocalizedString("preference.subtitle", comment: "Subtitles")
+  }
 }

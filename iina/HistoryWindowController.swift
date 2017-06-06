@@ -173,7 +173,7 @@ class HistoryWindowController: NSWindowController, NSOutlineViewDelegate, NSOutl
         let fileExists = FileManager.default.fileExists(atPath: entry.url.path)
         filenameView.textField?.stringValue = entry.name
         filenameView.textField?.textColor = fileExists ? .controlTextColor : .disabledControlTextColor
-        filenameView.docImage.image = NSWorkspace.shared().icon(forFileType: entry.url.pathExtension)
+        filenameView.docImage.image = NSWorkspace.shared.icon(forFileType: entry.url.pathExtension)
       } else if identifier == "Progress" {
         // Progress cell
         let entry = item as! PlaybackHistory
@@ -233,9 +233,9 @@ class HistoryWindowController: NSWindowController, NSOutlineViewDelegate, NSOutl
     case MenuItemTagDelete:
       return !selectedEntries.isEmpty
     case MenuItemTagSearchFilename:
-      menuItem.state = searchOption == .filename ? NSOnState : NSOffState
+      menuItem.state = searchOption == .filename ? .onState : .offState
     case MenuItemTagSearchFullPath:
-      menuItem.state = searchOption == .fullPath ? NSOnState : NSOffState
+      menuItem.state = searchOption == .fullPath ? .onState : .offState
     default:
       break
     }
@@ -251,7 +251,7 @@ class HistoryWindowController: NSWindowController, NSOutlineViewDelegate, NSOutl
 
   @IBAction func revealInFinderAction(_ sender: AnyObject) {
     let urls = selectedEntries.flatMap { FileManager.default.fileExists(atPath: $0.url.path) ? $0.url: nil }
-    NSWorkspace.shared().activateFileViewerSelecting(urls)
+    NSWorkspace.shared.activateFileViewerSelecting(urls)
   }
 
   @IBAction func deleteAction(_ sender: AnyObject) {

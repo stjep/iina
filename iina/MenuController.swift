@@ -287,7 +287,7 @@ class MenuController: NSObject, NSMenuDelegate {
     let noTrackMenuItem = NSMenuItem(title: Constants.String.trackNone, action: #selector(MainWindowController.menuChangeTrack(_:)), keyEquivalent: "")
     noTrackMenuItem.representedObject = MPVTrack.emptyTrack(for: type)
     if info.trackId(type) == 0 {  // no track
-      noTrackMenuItem.state = NSOnState
+      noTrackMenuItem.state = .onState
     }
     menu.addItem(noTrackMenuItem)
     for track in info.trackList(type) {
@@ -299,17 +299,17 @@ class MenuController: NSObject, NSMenuDelegate {
   private func updatePlaybackMenu() {
     pause.title = PlayerCore.shared.info.isPaused ? Constants.String.resume : Constants.String.pause
     let isLoop = PlayerCore.shared.mpvController.getFlag(MPVOption.PlaybackControl.loopFile)
-    fileLoop.state = isLoop ? NSOnState : NSOffState
+    fileLoop.state = isLoop ? .onState : .offState
     let isPlaylistLoop = PlayerCore.shared.mpvController.getString(MPVOption.PlaybackControl.loopPlaylist)
-    playlistLoop.state = (isPlaylistLoop == "inf" || isPlaylistLoop == "force") ? NSOnState : NSOffState
+    playlistLoop.state = (isPlaylistLoop == "inf" || isPlaylistLoop == "force") ? .onState : .offState
   }
 
   private func updateVideoMenu() {
     let isInFullScreen = PlayerCore.shared.mainWindow?.isInFullScreen ?? false
     let isInPIP = PlayerCore.shared.mainWindow?.isInPIP ?? false
     let isOntop = PlayerCore.shared.mainWindow?.isOntop ?? false
-    alwaysOnTop.state = isOntop ? NSOnState : NSOffState
-    deinterlace.state = PlayerCore.shared.info.deinterlace ? NSOnState : NSOffState
+    alwaysOnTop.state = isOntop ? .onState : .offState
+    deinterlace.state = PlayerCore.shared.info.deinterlace ? .onState : .offState
     fullScreen.title = isInFullScreen ? Constants.String.exitFullScreen : Constants.String.fullScreen
     pictureInPicture?.title = isInPIP ? Constants.String.exitPIP : Constants.String.pip
   }
@@ -333,8 +333,8 @@ class MenuController: NSObject, NSMenuDelegate {
 
   private func updateFlipAndMirror() {
     let info = PlayerCore.shared.info
-    flip.state = info.flipFilter == nil ? NSOffState : NSOnState
-    mirror.state = info.mirrorFilter == nil ? NSOffState : NSOnState
+    flip.state = info.flipFilter == nil ? .offState : .onState
+    mirror.state = info.mirrorFilter == nil ? .offState : .onState
   }
 
   private func updateSubMenu() {
@@ -417,7 +417,7 @@ class MenuController: NSObject, NSMenuDelegate {
     // check convinently binded menus
     if let checkEnableBlock = menuBindingList[menu] {
       for item in menu.items {
-        item.state = checkEnableBlock(item) ? NSOnState : NSOffState
+        item.state = checkEnableBlock(item) ? .onState : .offState
       }
     }
   }

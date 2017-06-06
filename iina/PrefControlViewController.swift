@@ -11,9 +11,9 @@ import MASPreferences
 
 class PrefControlViewController: NSViewController, MASPreferencesViewController {
 
-  override var nibName: String? {
+  override var nibName: NSNib.Name? {
     get {
-      return "PrefControlViewController"
+      return NSNib.Name("PrefControlViewController")
     }
   }
 

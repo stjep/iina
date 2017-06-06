@@ -78,7 +78,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(self.checkServiceStartup), userInfo: nil, repeats: false)
       }
     }
-
     // show alpha in color panels
     NSColorPanel.shared().showsAlpha = true
 
@@ -231,7 +230,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let screenshotPath = UserDefaults.standard.string(forKey: Preference.Key.screenshotFolder)!
     let absoluteScreenshotPath = NSString(string: screenshotPath).expandingTildeInPath
     let url = URL(fileURLWithPath: absoluteScreenshotPath, isDirectory: true)
-      NSWorkspace.shared().open(url)
+      NSWorkspace.shared.open(url)
   }
 
   @IBAction func menuSelectAudioDevice(_ sender: NSMenuItem) {
@@ -261,15 +260,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   @IBAction func helpAction(_ sender: AnyObject) {
-    NSWorkspace.shared().open(URL(string: AppData.wikiLink)!)
+    NSWorkspace.shared.open(URL(string: AppData.wikiLink)!)
   }
 
   @IBAction func githubAction(_ sender: AnyObject) {
-    NSWorkspace.shared().open(URL(string: AppData.githubLink)!)
+    NSWorkspace.shared.open(URL(string: AppData.githubLink)!)
   }
 
   @IBAction func websiteAction(_ sender: AnyObject) {
-    NSWorkspace.shared().open(URL(string: AppData.websiteLink)!)
+    NSWorkspace.shared.open(URL(string: AppData.websiteLink)!)
   }
 
   @IBAction func setSelfAsDefaultAction(_ sender: AnyObject) {

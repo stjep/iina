@@ -10,11 +10,38 @@ import Cocoa
 import MASPreferences
 
 
-class PrefGeneralViewController: NSViewController, MASPreferencesViewController {
+class PrefGeneralViewController: NSViewController {
 
-  override var nibName: String? {
+  // view size is handled by AutoLayout, so it's not resizable
+  var hasResizableWidth: Bool = false
+  var hasResizableHeight: Bool = false
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    // Do view setup here.
+  }
+
+  // MARK: - IBAction
+
+  @IBAction func chooseScreenshotPathAction(_ sender: AnyObject) {
+    Utility.quickOpenPanel(title: "Choose screenshot save path", isDir: true) { url in
+      UserDefaults.standard.set(url.path, forKey: Preference.Key.screenshotFolder)
+      UserDefaults.standard.synchronize()
+    }
+  }
+
+  @IBAction func rememberRecentChanged(_ sender: NSButton) {
+    if sender.state == .offState {
+      NSDocumentController.shared.clearRecentDocuments(self)
+    }
+  }
+
+}
+
+extension PrefGeneralViewController: MASPreferencesViewController {
+  override var nibName: NSNib.Name? {
     get {
-      return "PrefGeneralViewController"
+      return NSNib.Name("PrefGeneralViewController")
     }
   }
 
@@ -40,29 +67,4 @@ class PrefGeneralViewController: NSViewController, MASPreferencesViewController 
       return NSLocalizedString("preference.general", comment: "General")
     }
   }
-
-  // view size is handled by AutoLayout, so it's not resizable
-  var hasResizableWidth: Bool = false
-  var hasResizableHeight: Bool = false
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    // Do view setup here.
-  }
-
-  // MARK: - IBAction
-
-  @IBAction func chooseScreenshotPathAction(_ sender: AnyObject) {
-    Utility.quickOpenPanel(title: "Choose screenshot save path", isDir: true) { url in
-      UserDefaults.standard.set(url.path, forKey: Preference.Key.screenshotFolder)
-      UserDefaults.standard.synchronize()
-    }
-  }
-
-  @IBAction func rememberRecentChanged(_ sender: NSButton) {
-    if sender.state == NSOffState {
-      NSDocumentController.shared().clearRecentDocuments(self)
-    }
-  }
-
 }

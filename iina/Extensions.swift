@@ -178,7 +178,7 @@ extension NSMenu {
     let menuItem = NSMenuItem(title: string, action: selector, keyEquivalent: "")
     menuItem.tag = tag ?? -1
     menuItem.representedObject = obj
-    menuItem.state = stateOn ? NSOnState : NSOffState
+    menuItem.state = stateOn ? .onState : .offState
     self.addItem(menuItem)
   }
 }
