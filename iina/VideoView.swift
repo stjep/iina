@@ -8,13 +8,6 @@
 
 import Cocoa
 
-
-extension NSPasteboard.PasteboardType {
-  static let filenames = NSPasteboard.PasteboardType("NSFilenamesPboardType")
-  static let url = NSPasteboard.PasteboardType((kUTTypeFileURL as NSString) as String)
-}
-
-
 class VideoView: NSView {
 
   lazy var playerCore = PlayerCore.shared

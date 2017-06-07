@@ -19,8 +19,6 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
 
   var playerCore: PlayerCore = PlayerCore.shared
   weak var mainWindow: MainWindowController!
-  
-  let IINAPlaylistItemType = NSPasteboard.PasteboardType("IINAPlaylistItemType")
 
   /** Similiar to the one in `QuickSettingViewController`.
    Since IBOutlet is `nil` when the view is not loaded at first time,
@@ -86,7 +84,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     playlistTableView.target = self
     
     // register for drag and drop
-    playlistTableView.registerForDraggedTypes([IINAPlaylistItemType, .filenames])
+    playlistTableView.registerForDraggedTypes([.iinaPlaylistItem, .filenames])
   }
 
   override func viewDidAppear() {
@@ -159,8 +157,8 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
   
   func tableView(_ tableView: NSTableView, writeRowsWith rowIndexes: IndexSet, to pboard: NSPasteboard) -> Bool {
     let data = NSKeyedArchiver.archivedData(withRootObject: [rowIndexes])
-    pboard.declareTypes([IINAPlaylistItemType], owner:self)
-    pboard.setData(data, forType:IINAPlaylistItemType)
+    pboard.declareTypes([.iinaPlaylistItem], owner:self)
+    pboard.setData(data, forType:.iinaPlaylistItem)
     return true
   }
 
@@ -184,7 +182,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
       playlistTableView.setDropRow(row, dropOperation: .above)
       return .copy
     }
-    if let _ = pasteboard.propertyList(forType: IINAPlaylistItemType) {
+    if let _ = pasteboard.propertyList(forType: .iinaPlaylistItem) {
       playlistTableView.setDropRow(row, dropOperation: .above)
       return .move
     }
@@ -194,7 +192,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
   func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
     let pasteboard = info.draggingPasteboard()
 
-    if let rowData = pasteboard.data(forType: IINAPlaylistItemType) {
+    if let rowData = pasteboard.data(forType: .iinaPlaylistItem) {
       var dataArray = NSKeyedUnarchiver.unarchiveObject(with: rowData) as! Array<IndexSet>
       let indexSet = dataArray[0]
 

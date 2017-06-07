@@ -371,3 +371,10 @@ extension CharacterSet {
 extension NSMenuItem {
   static let dummy = NSMenuItem(title: "Dummy", action: nil, keyEquivalent: "")
 }
+
+extension NSPasteboard.PasteboardType {
+  static let filenames = NSPasteboard.PasteboardType("NSFilenamesPboardType")
+  static let url = NSPasteboard.PasteboardType((kUTTypeFileURL as NSString) as String)
+  static let iinaPlaylistItem = NSPasteboard.PasteboardType("IINAPlaylistItemType")
+}
+
