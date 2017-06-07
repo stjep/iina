@@ -17,9 +17,9 @@ class PrefControlViewController: NSViewController, MASPreferencesViewController 
     }
   }
 
-  override var identifier: String? {
+  override var identifier: NSUserInterfaceItemIdentifier? {
     get {
-      return "control"
+      return NSUserInterfaceItemIdentifier("control")
     }
     set {
       super.identifier = newValue
@@ -28,7 +28,7 @@ class PrefControlViewController: NSViewController, MASPreferencesViewController 
 
   var toolbarItemImage: NSImage {
     get {
-      return NSImage(named: "toolbar_control")!
+      return NSImage(byReferencingFile: "toolbar_control")!
     }
   }
 

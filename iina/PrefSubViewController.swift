@@ -50,7 +50,7 @@ class PrefSubViewController: NSViewController {
         loginIndicator.startAnimation(nil)
         firstly {
           OpenSubSupport().login(testUser: username, password: password)
-        }.then { () -> Void in
+        }.then { (arg) -> Void in
           let status = OpenSubSupport.savePassword(username: username, passwd: password)
           if status == errSecSuccess {
             UserDefaults.standard.set(username, forKey: Preference.Key.openSubUsername)
@@ -216,9 +216,9 @@ class SubLangToken: NSObject {
 
 extension PrefSubViewController: MASPreferencesViewController {
 
-  override var identifier: String? {
+  override var identifier: NSUserInterfaceItemIdentifier? {
     get {
-      return "sub"
+      return NSUserInterfaceItemIdentifier("sub")
     }
     set {
       super.identifier = newValue
@@ -226,7 +226,7 @@ extension PrefSubViewController: MASPreferencesViewController {
   }
 
   var toolbarItemImage: NSImage {
-    return NSImage(named: NSImage.Name.fontPanel)!
+    return NSImage(named: .fontPanel)!
   }
 
   var toolbarItemLabel: String {

@@ -653,7 +653,7 @@ class PlayerCore: NSObject {
       let duration = info.videoDuration ?? .zero
       HistoryController.shared.add(url, duration: duration.second)
       if ud.bool(forKey: Preference.Key.recordRecentFiles) && ud.bool(forKey: Preference.Key.trackAllFilesInRecentOpenMenu) {
-        NSDocumentController.shared().noteNewRecentDocumentURL(url)
+        NSDocumentController.shared.noteNewRecentDocumentURL(url)
       }
     }
     NotificationCenter.default.post(Notification(name: Constants.Noti.fileLoaded))
@@ -929,7 +929,7 @@ class PlayerCore: NSObject {
 
       // match them
       for video in unmatchedVideos {
-        let minDistToSub = video.dist.reduce(UInt.max, { min($0.0, $0.1.value) })
+        let minDistToSub = video.dist.reduce(UInt.max, { min($0, $1.value) })
         guard minDistToSub != .max else { continue }
         unmatchedSubs
           .filter { video.dist[$0]! == minDistToSub && $0.minDist.contains(video) }

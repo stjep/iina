@@ -79,7 +79,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       }
     }
     // show alpha in color panels
-    NSColorPanel.shared().showsAlpha = true
+    NSColorPanel.shared.showsAlpha = true
 
     // other
     if #available(OSX 10.12.2, *) {
@@ -92,7 +92,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
       parsePendingURL(url)
     }
 
-    NSApplication.shared().servicesProvider = self
+    NSApplication.shared.servicesProvider = self
   }
 
   func applicationWillTerminate(_ aNotification: Notification) {
@@ -108,7 +108,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     return UserDefaults.standard.bool(forKey: Preference.Key.quitWhenNoOpenedWindow)
   }
 
-  func applicationShouldTerminate(_ sender: NSApplication) -> NSApplicationTerminateReply {
+  func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
     playerCore.terminateMPV()
     return .terminateNow
   }
@@ -138,7 +138,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     let url = URL(fileURLWithPath: filename)
     if playerCore.ud.bool(forKey: Preference.Key.recordRecentFiles) {
-      NSDocumentController.shared().noteNewRecentDocumentURL(url)
+      NSDocumentController.shared.noteNewRecentDocumentURL(url)
     }
     playerCore.openFile(url)
     return true
@@ -147,7 +147,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   // MARK: - Accept dropped string and URL
 
   func droppedText(_ pboard: NSPasteboard, userData:String, error: NSErrorPointer) {
-    if let url = pboard.string(forType: NSStringPboardType) {
+    if let url = pboard.string(forType: .string) {
       handledDroppedText = true
       playerCore.openURLString(url)
     }
@@ -197,10 +197,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     panel.canChooseDirectories = false
     panel.resolvesAliases = true
     panel.allowsMultipleSelection = false
-    if panel.runModal() == NSFileHandlingPanelOKButton {
+    if panel.runModal() == .OK {
       if let url = panel.url {
         if playerCore.ud.bool(forKey: Preference.Key.recordRecentFiles) {
-          NSDocumentController.shared().noteNewRecentDocumentURL(url)
+          NSDocumentController.shared.noteNewRecentDocumentURL(url)
         }
         playerCore.openFile(url)
       }
@@ -217,7 +217,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     panel.addButton(withTitle: NSLocalizedString("general.cancel", comment: "Cancel"))
     panel.window.initialFirstResponder = inputViewController.urlField
     let response = panel.runModal()
-    if response == NSAlertFirstButtonReturn {
+    if response == .alertFirstButtonReturn {
       if let url = inputViewController.url {
         playerCore.openURL(url)
       } else {

@@ -43,12 +43,12 @@ fileprivate let touchBarItemBinding: [NSTouchBarItem.Identifier: (NSImage.Name, 
   .ahead30Sec: (.touchBarSkipAhead30SecondsTemplate, 30, "30sec Ahead"),
   .back15Sec: (.touchBarSkipBack15SecondsTemplate, -15, "-15sec Ahead"),
   .back30Sec: (.touchBarSkipBack30SecondsTemplate, -30, "-30sec Ahead"),
-  .next: (.touchBarSkipAheadTemplate.rawValue, 0, "Next video"),
-  .prev: (.touchBarSkipBackTemplate.rawValue, 1, "Previous video"),
-  .volumeUp: (.touchBarVolumeUpTemplate.rawValue, 0, "Volume +"),
-  .volumeDown: (.touchBarVolumeDownTemplate.rawValue, 1, "Volume -"),
-  .rewind: (.touchBarRewindTemplate.rawValue, 0, "Rewind"),
-  .fastForward: (.touchBarFastForwardTemplate.rawValue, 1, "Fast forward")
+  .next: (.touchBarSkipAheadTemplate, 0, "Next video"),
+  .prev: (.touchBarSkipBackTemplate, 1, "Previous video"),
+  .volumeUp: (.touchBarVolumeUpTemplate, 0, "Volume +"),
+  .volumeDown: (.touchBarVolumeDownTemplate, 1, "Volume -"),
+  .rewind: (.touchBarRewindTemplate, 0, "Rewind"),
+  .fastForward: (.touchBarFastForwardTemplate, 1, "Fast forward")
 ]
 
 @available(OSX 10.12.2, *)

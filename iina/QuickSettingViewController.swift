@@ -10,8 +10,8 @@ import Cocoa
 
 class QuickSettingViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, SidebarViewController {
 
-  override var nibName: String {
-    return "QuickSettingViewController"
+  override var nibName: NSNib.Name? {
+    return NSNib.Name("QuickSettingViewController")
   }
   
   let sliderSteps = 24.0
@@ -123,7 +123,7 @@ class QuickSettingViewController: NSViewController, NSTableViewDataSource, NSTab
     // notifications
     let tracklistChangeObserver = NotificationCenter.default.addObserver(forName: Constants.Noti.tracklistChanged, object: nil, queue: OperationQueue.main) { _ in
       self.playerCore.getTrackInfo()
-      self.withAllTableViews { $0.0.reloadData() }
+      self.withAllTableViews { (v, _) in v.reloadData() }
     }
     observers.append(tracklistChangeObserver)
     let afChangeObserver = NotificationCenter.default.addObserver(forName: Constants.Noti.afChanged, object: nil, queue: OperationQueue.main) { _ in

@@ -269,8 +269,8 @@ extension NSMutableAttributedString {
     let range = NSRange(location: 0, length: self.length)
     let nsurl = NSURL(string: url)!
     self.beginEditing()
-    self.addAttribute(NSLinkAttributeName, value: nsurl, range: range)
-    self.addAttribute(NSFontAttributeName, value: font, range: range)
+    self.addAttribute(.link, value: nsurl, range: range)
+    self.addAttribute(.font, value: font, range: range)
     self.endEditing()
   }
 }

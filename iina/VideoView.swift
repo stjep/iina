@@ -50,11 +50,11 @@ class VideoView: NSView {
 
     // set up layer
     layer = videoLayer
-    videoLayer.contentsScale = NSScreen.main()!.backingScaleFactor
+    videoLayer.contentsScale = NSScreen.main!.backingScaleFactor
     wantsLayer = true
 
     // other settings
-    autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
+    autoresizingMask = [.width, .height]
     wantsBestResolutionOpenGLSurface = true
   
     // dragging init
@@ -144,7 +144,7 @@ class VideoView: NSView {
 
       playerCore.openURLString(url[0])
       return true
-    } else if types.contains(NSPasteboardTypeString) {
+    } else if types.contains(.string) {
       guard let droppedString = pb.pasteboardItems![0].string(forType: "public.utf8-plain-text") else {
         return false
       }

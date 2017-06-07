@@ -45,9 +45,9 @@ extension PrefGeneralViewController: MASPreferencesViewController {
     }
   }
 
-  override var identifier: String? {
+  override var identifier: NSUserInterfaceItemIdentifier? {
     get {
-      return "general"
+      return NSUserInterfaceItemIdentifier("general")
     }
     set {
       super.identifier = newValue
@@ -56,7 +56,7 @@ extension PrefGeneralViewController: MASPreferencesViewController {
 
   var toolbarItemImage: NSImage {
     get {
-      return NSImage(named: NSImageNamePreferencesGeneral)!
+      return NSImage(named: .preferencesGeneral)!
     }
   }
 

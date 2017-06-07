@@ -68,8 +68,8 @@ class MPVController: NSObject {
 
   deinit {
     ObjcUtils.silenced {
-      self.optionObservers.forEach { (k, v) in
-        self.ud.removeObserver(self, forKeyPath: k)
+      self.optionObservers.forEach {
+        self.ud.removeObserver(self, forKeyPath: $0.key)
       }
     }
   }
@@ -291,8 +291,8 @@ class MPVController: NSObject {
       }, mutableRawPointerOf(obj: self))
 
     // Observe propoties.
-    observeProperties.forEach { (k, v) in
-      mpv_observe_property(mpv, 0, k, v)
+    observeProperties.forEach {
+      mpv_observe_property(mpv, 0, $0.key, $0.value)
     }
 
     // Initialize an uninitialized mpv instance. If the mpv instance is already running, an error is retuned.

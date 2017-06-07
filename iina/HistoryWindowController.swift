@@ -30,8 +30,8 @@ class HistoryWindowController: NSWindowController, NSOutlineViewDelegate, NSOutl
     .fileLocation: { $0.url.deletingLastPathComponent().path }
   ]
 
-  override var windowNibName: String {
-    return "HistoryWindowController"
+  override var windowNibName: NSNib.Name? {
+    return NSNib.Name("HistoryWindowController")
   }
 
   @IBOutlet weak var outlineView: NSOutlineView!
@@ -106,8 +106,8 @@ class HistoryWindowController: NSWindowController, NSOutlineViewDelegate, NSOutl
   // MARK: Key event
 
   override func keyDown(with event: NSEvent) {
-    let commandKey = NSEventModifierFlags.command.rawValue
-    if (event.modifierFlags.rawValue & NSEventModifierFlags.deviceIndependentFlagsMask.rawValue) == commandKey  {
+    let commandKey = NSEvent.ModifierFlags.command.rawValue
+    if (event.modifierFlags.rawValue & NSEvent.ModifierFlags.deviceIndependentFlagsMask.rawValue) == commandKey  {
       switch event.charactersIgnoringModifiers! {
       case "f":
         window!.makeFirstResponder(historySearchField)
@@ -120,6 +120,12 @@ class HistoryWindowController: NSWindowController, NSOutlineViewDelegate, NSOutl
   }
 
   // MARK: NSOutlineViewDelegate
+
+  private let identifierTime = NSUserInterfaceItemIdentifier("Time")
+  private let identifierProgress = NSUserInterfaceItemIdentifier("Progress")
+  private let identifierFilename = NSUserInterfaceItemIdentifier("Filename")
+  private let identifierGroup = NSUserInterfaceItemIdentifier("Group")
+  private let identifierContextMenu = NSUserInterfaceItemIdentifier("ContextMenu")
 
   func doubleAction() {
     if let selected = outlineView.item(atRow: outlineView.clickedRow) as? PlaybackHistory {
@@ -153,10 +159,10 @@ class HistoryWindowController: NSWindowController, NSOutlineViewDelegate, NSOutl
 
   func outlineView(_ outlineView: NSOutlineView, objectValueFor tableColumn: NSTableColumn?, byItem item: Any?) -> Any? {
     if let entry = item as? PlaybackHistory {
-      if tableColumn?.identifier == "Time" {
+      if tableColumn?.identifier == identifierTime {
         let formatter = groupBy == .lastPlayed ? HistoryWindowController.dateFormatterTime : HistoryWindowController.dateFormatterDateAndTime
         return formatter.string(from: entry.addedDate)
-      } else if tableColumn?.identifier == "Progress" {
+      } else if tableColumn?.identifier == identifierProgress {
         return entry.duration.stringRepresentation
       }
     }
@@ -165,8 +171,8 @@ class HistoryWindowController: NSWindowController, NSOutlineViewDelegate, NSOutl
 
   func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
     if let identifier = tableColumn?.identifier {
-      let view = outlineView.make(withIdentifier: identifier, owner: nil)
-      if identifier == "Filename" {
+      let view = outlineView.makeView(withIdentifier: identifier, owner: nil)
+      if identifier == identifierProgress {
         // Filename cell
         let entry = item as! PlaybackHistory
         let filenameView = (view as! HistoryFilenameCellView)
@@ -174,7 +180,7 @@ class HistoryWindowController: NSWindowController, NSOutlineViewDelegate, NSOutl
         filenameView.textField?.stringValue = entry.name
         filenameView.textField?.textColor = fileExists ? .controlTextColor : .disabledControlTextColor
         filenameView.docImage.image = NSWorkspace.shared.icon(forFileType: entry.url.pathExtension)
-      } else if identifier == "Progress" {
+      } else if identifier == identifierProgress {
         // Progress cell
         let entry = item as! PlaybackHistory
         let filenameView = (view as! HistoryProgressCellView)
@@ -190,7 +196,7 @@ class HistoryWindowController: NSWindowController, NSOutlineViewDelegate, NSOutl
       return view
     } else {
       // group columns
-      return outlineView.make(withIdentifier: "Group", owner: nil)
+      return outlineView.makeView(withIdentifier: identifierGroup, owner: nil)
     }
   }
 
@@ -216,7 +222,7 @@ class HistoryWindowController: NSWindowController, NSOutlineViewDelegate, NSOutl
   private var selectedEntries: [PlaybackHistory] = []
 
   func menuNeedsUpdate(_ menu: NSMenu) {
-    if menu.identifier == "ContextMenu" {
+    if menu.identifier == identifierContextMenu {
       var indexSet = outlineView.selectedRowIndexes
       if outlineView.clickedRow >= 0 {
         indexSet.insert(outlineView.clickedRow)

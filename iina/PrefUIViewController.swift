@@ -11,13 +11,13 @@ import MASPreferences
 
 class PrefUIViewController: NSViewController, MASPreferencesViewController {
 
-  override var nibName: String {
-    return "PrefUIViewController"
+  override var nibName: NSNib.Name {
+    return NSNib.Name("PrefUIViewController")
   }
 
-  override var identifier: String? {
+  override var identifier: NSUserInterfaceItemIdentifier? {
     get {
-      return "ui"
+      return NSUserInterfaceItemIdentifier("ui")
     }
     set {
       super.identifier = newValue
@@ -26,7 +26,7 @@ class PrefUIViewController: NSViewController, MASPreferencesViewController {
 
   var toolbarItemImage: NSImage {
     get {
-      return NSImage(named: "toolbar_play")!
+      return NSImage(byReferencingFile: "toolbar_play")!
     }
   }
 
@@ -60,7 +60,7 @@ class PrefUIViewController: NSViewController, MASPreferencesViewController {
     default:
       name = "osc_float"
     }
-    oscPreviewImageView.image = NSImage(named: name)
+    oscPreviewImageView.image = NSImage(byReferencingFile: name)
   }
 
 }

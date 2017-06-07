@@ -13,14 +13,14 @@ fileprivate let FilenameMinLength = 12
 
 class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, NSMenuDelegate, SidebarViewController {
 
-  override var nibName: String {
-    return "PlaylistViewController"
+  override var nibName: NSNib.Name? {
+    return NSNib.Name("PlaylistViewController")
   }
 
   var playerCore: PlayerCore = PlayerCore.shared
   weak var mainWindow: MainWindowController!
   
-  let IINAPlaylistItemType = "IINAPlaylistItemType"
+  let IINAPlaylistItemType = NSPasteboard.PasteboardType("IINAPlaylistItemType")
 
   /** Similiar to the one in `QuickSettingViewController`.
    Since IBOutlet is `nil` when the view is not loaded at first time,
@@ -165,7 +165,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
   }
 
 
-  func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+  internal func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
     let pasteboard = info.draggingPasteboard()
 
     if let fileNames = pasteboard.propertyList(forType: NSFilenamesPboardType) as? [String] {
@@ -191,7 +191,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     return []
   }
 
-  func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+  func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
     let pasteboard = info.draggingPasteboard()
 
     if let rowData = pasteboard.data(forType: IINAPlaylistItemType) {
@@ -381,7 +381,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
   func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
     guard let identifier = tableColumn?.identifier else { return nil }
     let info = playerCore.info
-    let v = tableView.make(withIdentifier: identifier, owner: self) as! NSTableCellView
+    let v = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
 
     // playlist
     if tableView == playlistTableView {
@@ -630,7 +630,7 @@ class PlaylistView: NSView {
 
   override func resetCursorRects() {
     let rect = NSRect(x: frame.origin.x - 4, y: frame.origin.y, width: 4, height: frame.height)
-    addCursorRect(rect, cursor: NSCursor.resizeLeftRight())
+    addCursorRect(rect, cursor: NSCursor.resizeLeftRight)
   }
 
 }

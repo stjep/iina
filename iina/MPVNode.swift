@@ -121,9 +121,9 @@ class MPVNode {
       var valueiPtr = valuePtr
       var keyiPtr = keyPtr
       // assign each key and value ptr
-      try objDic.forEach { (k, v) in
-        try valueiPtr.pointee = create(v)
-        keyiPtr.pointee = allocString(k)
+      try objDic.forEach {
+        try valueiPtr.pointee = create($0.value)
+        keyiPtr.pointee = allocString($0.key)
         valueiPtr = valueiPtr.successor()
         keyiPtr = keyiPtr.successor()
       }

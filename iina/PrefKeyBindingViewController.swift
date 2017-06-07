@@ -15,9 +15,9 @@ class PrefKeyBindingViewController: NSViewController, MASPreferencesViewControll
     return NSNib.Name("PrefKeyBindingViewController")
   }
 
-  override var identifier: String? {
+  override var identifier: NSUserInterfaceItemIdentifier? {
     get {
-      return "keybinding"
+      return NSUserInterfaceItemIdentifier("keybinding")
     }
     set {
       super.identifier = newValue
@@ -25,7 +25,7 @@ class PrefKeyBindingViewController: NSViewController, MASPreferencesViewControll
   }
 
   var toolbarItemImage: NSImage {
-    return NSImage(named: "toolbar_key")!
+    return NSImage(byReferencingFile: "toolbar_key")!
   }
 
   var toolbarItemLabel: String {
@@ -72,8 +72,8 @@ class PrefKeyBindingViewController: NSViewController, MASPreferencesViewControll
 
     // config files
     // - default
-    PrefKeyBindingViewController.defaultConfigs.forEach { (k, v) in
-      configSelectPopUp.addItem(withTitle: k)
+    PrefKeyBindingViewController.defaultConfigs.forEach {
+      configSelectPopUp.addItem(withTitle: $0.key)
     }
     // - user
     guard let uc = UserDefaults.standard.dictionary(forKey: Preference.Key.inputConfigs)
@@ -81,8 +81,8 @@ class PrefKeyBindingViewController: NSViewController, MASPreferencesViewControll
       Utility.fatal("Cannot get config file list!")
     }
     userConfigs = uc
-    userConfigs.forEach { (k, v) in
-      configSelectPopUp.addItem(withTitle: k)
+    userConfigs.forEach {
+      configSelectPopUp.addItem(withTitle: $0.key)
     }
 
     var currentConf = ""
@@ -119,7 +119,7 @@ class PrefKeyBindingViewController: NSViewController, MASPreferencesViewControll
     panel.window.initialFirstResponder = keyRecordViewController.keyRecordView
     panel.addButton(withTitle: NSLocalizedString("general.ok", comment: "OK"))
     panel.addButton(withTitle: NSLocalizedString("general.cancel", comment: "Cancel"))
-    if panel.runModal() == NSAlertFirstButtonReturn {
+    if panel.runModal() == .alertFirstButtonReturn {
       ok(keyRecordViewController.keyCode, keyRecordViewController.action)
     }
   }

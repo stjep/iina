@@ -57,7 +57,7 @@ class MPVFilter: NSObject {
         // else print param names
         } else {
           str += "="
-          str += params!.map({ (k, v) -> String in return "\(k)=\(v)" }).joined(separator: ":")
+          str += params!.map({ "\($0.key)=\($0.value)" }).joined(separator: ":")
         }
       }
       return str

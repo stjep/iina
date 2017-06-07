@@ -180,10 +180,10 @@ class CropBoxView: NSView {
   // MARK: - Cursor rects
 
   override func resetCursorRects() {
-    addCursorRect(rectTop, cursor: NSCursor.resizeUpDown())
-    addCursorRect(rectBottom, cursor: NSCursor.resizeUpDown())
-    addCursorRect(rectLeft, cursor: NSCursor.resizeLeftRight())
-    addCursorRect(rectRight, cursor: NSCursor.resizeLeftRight())
+    addCursorRect(rectTop, cursor: NSCursor.resizeUpDown)
+    addCursorRect(rectBottom, cursor: NSCursor.resizeUpDown)
+    addCursorRect(rectLeft, cursor: NSCursor.resizeLeftRight)
+    addCursorRect(rectRight, cursor: NSCursor.resizeLeftRight)
   }
 
   func updateCursorRects() {

@@ -14,9 +14,9 @@ class PrefCodecViewController: NSViewController {
     return NSNib.Name("PrefCodecViewController")
   }
 
-  override var identifier: String? {
+  override var identifier: NSUserInterfaceItemIdentifier? {
     get {
-      return "codec"
+      return NSUserInterfaceItemIdentifier("codec")
     }
     set {
       super.identifier = newValue
@@ -24,7 +24,7 @@ class PrefCodecViewController: NSViewController {
   }
 
   var toolbarItemImage: NSImage {
-    return NSImage(named: "toolbar_codec")!
+    return NSImage(byReferencingFile: "toolbar_codec")!
   }
 
   var toolbarItemLabel: String {

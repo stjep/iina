@@ -101,7 +101,8 @@ class KeyBindingDataLoader {
   ]
 
   static private func propertiesForSet() -> [KeyBindingItem] {
-    return propertyList.map { (str, type) -> KeyBindingItem in
+    return propertyList.map {
+      let (str, type) = $0
       if type == .separator { return KBI.separator() }
       let kbi = KBI(str, type: .label, children:
                   KBI("to", type: .placeholder, children:
@@ -116,7 +117,8 @@ class KeyBindingDataLoader {
   }
 
   static private func propertiesForMultiply() -> [KeyBindingItem] {
-    return propertyList.filter { $0.1 != .bool && $0.1 != .string }.map { (str, type) -> KeyBindingItem in
+    return propertyList.filter { $0.1 != .bool && $0.1 != .string }.map {
+      let (str, type) = $0
       if type == .separator { return KBI.separator() }
       let kbi = KBI(str, type: .label, children:
                   KBI("by", type: .placeholder, children:
@@ -129,7 +131,8 @@ class KeyBindingDataLoader {
   }
 
   static private func propertiesForAdd() -> [KeyBindingItem] {
-    return propertyList.filter { $0.1 != .bool && $0.1 != .string }.map { (str, type) -> KeyBindingItem in
+    return propertyList.filter { $0.1 != .bool && $0.1 != .string }.map {
+      let (str, type) = $0
       if type == .separator { return KBI.separator() }
       let kbi = KBI(str, type: .label, children:
                   KBI.chooseIn("add|minus", children:
@@ -142,7 +145,8 @@ class KeyBindingDataLoader {
   }
 
   static private func propertiesForCycle() -> [KeyBindingItem] {
-    var list = propertyList.filter { $0.1 != .string }.map { (str, type) -> KeyBindingItem in
+    var list: [KeyBindingItem] = propertyList.filter { $0.1 != .string }.map {
+      let (str, type) = $0
       if type == .separator { return KBI.separator() }
       let kbi = KBI(str)
       kbi.l10nKey = "opt"
@@ -159,7 +163,8 @@ class KeyBindingDataLoader {
   }
 
   static private func propertiesForCycleValues() -> [KeyBindingItem] {
-    return propertyList.filter { $0.1 != .bool }.map { (str, type) -> KeyBindingItem in
+    return propertyList.filter { $0.1 != .bool }.map {
+      let (str, type) = $0
       if type == .separator { return KBI.separator() }
       let kbi = KBI(str, type: .label, children:
         KBI("in", type: .placeholder, children:
