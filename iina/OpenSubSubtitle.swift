@@ -122,7 +122,7 @@ class OpenSubSupport {
       } else {
         // check logged in
         if self.loggedIn {
-          fullfill()
+          fullfill(())
           return
         }
         // read password
@@ -149,7 +149,7 @@ class OpenSubSupport {
             self.token = parsed["token"] as! String
             Utility.log("OpenSub: logged in as user \(finalUser)")
             self.startHeartbeat()
-            fullfill()
+            fullfill(())
           } else {
             Utility.log("OpenSub: login failed, \(pStatus)")
             reject(OpenSubError.loginFailed(pStatus))

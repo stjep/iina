@@ -103,7 +103,7 @@ extension PrefSubViewController: NSTokenFieldDelegate {
     return matches.map { $0.description }
   }
 
-  func tokenField(_ tokenField: NSTokenField, representedObjectForEditing editingString: String) -> Any {
+  func tokenField(_ tokenField: NSTokenField, representedObjectForEditing editingString: String) -> Any? {
     if let code = Regex.iso639_2Desc.captures(in: editingString).at(1) {
       return SubLangToken(code)
     } else {

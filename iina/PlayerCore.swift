@@ -956,6 +956,7 @@ class PlayerCore: NSObject {
     case playlist
   }
 
+  @objc
   func syncUITime() {
     if info.isNetworkResource {
       syncUI(.timeAndCache)

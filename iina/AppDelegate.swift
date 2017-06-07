@@ -153,6 +153,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
   }
 
+  @objc
   func checkServiceStartup() {
     if !handledDroppedText && !handledURLEvent {
       openFile(self)
@@ -168,6 +169,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   // MARK: - URL Scheme
 
+  @objc
   func handleURLEvent(event: NSAppleEventDescriptor, withReplyEvent replyEvent: NSAppleEventDescriptor) {
     handledURLEvent = true
     guard let url = event.paramDescriptor(forKeyword: keyDirectObject)?.stringValue else { return }

@@ -9,6 +9,12 @@
 import Cocoa
 
 
+extension NSPasteboard.PasteboardType {
+  static let filenames = NSPasteboard.PasteboardType("NSFilenamesPboardType")
+  static let url = NSPasteboard.PasteboardType((kUTTypeFileURL as NSString) as String)
+}
+
+
 class VideoView: NSView {
 
   lazy var playerCore = PlayerCore.shared
@@ -58,7 +64,7 @@ class VideoView: NSView {
     wantsBestResolutionOpenGLSurface = true
   
     // dragging init
-    register(forDraggedTypes: [NSFilenamesPboardType, NSURLPboardType, NSPasteboardTypeString])
+    registerForDraggedTypes([.filenames, .url, .string])
   }
 
   required init?(coder: NSCoder) {
@@ -104,8 +110,8 @@ class VideoView: NSView {
   override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
     let pb = sender.draggingPasteboard()
     guard let types = pb.types else { return false }
-    if types.contains(NSFilenamesPboardType) {
-      guard let fileNames = pb.propertyList(forType: NSFilenamesPboardType) as? [String] else { return false }
+    if types.contains(.filenames) {
+      guard let fileNames = pb.propertyList(forType: .filenames) as? [String] else { return false }
       
       var videoFiles: [String] = []
       var subtitleFiles: [String] = []
@@ -139,13 +145,13 @@ class VideoView: NSView {
       }
       NotificationCenter.default.post(Notification(name: Constants.Noti.playlistChanged))
       return true
-    } else if types.contains(NSURLPboardType) {
-      guard let url = pb.propertyList(forType: NSURLPboardType) as? [String] else { return false }
+    } else if types.contains(.url) {
+      guard let url = pb.propertyList(forType: .url) as? [String] else { return false }
 
       playerCore.openURLString(url[0])
       return true
     } else if types.contains(.string) {
-      guard let droppedString = pb.pasteboardItems![0].string(forType: "public.utf8-plain-text") else {
+      guard let droppedString = pb.pasteboardItems![0].string(forType: .string) else {
         return false
       }
       if Regex.urlDetect.matches(droppedString) {

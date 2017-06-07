@@ -86,7 +86,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     playlistTableView.target = self
     
     // register for drag and drop
-    playlistTableView.register(forDraggedTypes: [IINAPlaylistItemType, NSFilenamesPboardType])
+    playlistTableView.registerForDraggedTypes([IINAPlaylistItemType, .filenames])
   }
 
   override func viewDidAppear() {
@@ -168,7 +168,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
   internal func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
     let pasteboard = info.draggingPasteboard()
 
-    if let fileNames = pasteboard.propertyList(forType: NSFilenamesPboardType) as? [String] {
+    if let fileNames = pasteboard.propertyList(forType: .filenames) as? [String] {
       var hasItemToAdd: Bool = false
       for path in fileNames {
         let ext = (path as NSString).pathExtension.lowercased()
@@ -258,7 +258,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
 
       return true
 
-    } else if let fileNames = pasteboard.propertyList(forType: NSFilenamesPboardType) as? [String] {
+    } else if let fileNames = pasteboard.propertyList(forType: .filenames) as? [String] {
       var added = 0
       var currentRow = row
       var playlistItems = tableView.numberOfRows - 1
@@ -341,7 +341,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     playerCore.toggleShuffle()
   }
 
-  
+  @objc
   func performDoubleAction(sender: AnyObject) {
     let tv = sender as! NSTableView
     if tv.numberOfSelectedRows > 0 {

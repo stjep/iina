@@ -179,10 +179,12 @@ class InspectorWindowController: NSWindowController, NSTableViewDelegate, NSTabl
 
   }
 
+  @objc
   func fileLoaded() {
     updateInfo()
   }
 
+  @objc
   func dynamicUpdate() {
     updateInfo(dynamic: true)
     watchTableView.reloadData()

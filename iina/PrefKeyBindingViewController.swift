@@ -387,6 +387,7 @@ extension PrefKeyBindingViewController: NSTableViewDelegate, NSTableViewDataSour
     return displayRawValues
   }
 
+  @objc
   func editRow() {
     guard shouldEnableEdit else { return }
     let selectedData = currentMapping[kbTableView.selectedRow]

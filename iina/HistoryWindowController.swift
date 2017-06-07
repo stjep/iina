@@ -127,6 +127,7 @@ class HistoryWindowController: NSWindowController, NSOutlineViewDelegate, NSOutl
   private let identifierGroup = NSUserInterfaceItemIdentifier("Group")
   private let identifierContextMenu = NSUserInterfaceItemIdentifier("ContextMenu")
 
+  @objc
   func doubleAction() {
     if let selected = outlineView.item(atRow: outlineView.clickedRow) as? PlaybackHistory {
       PlayerCore.shared.openFile(selected.url)

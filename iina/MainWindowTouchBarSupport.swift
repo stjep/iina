@@ -131,28 +131,34 @@ extension MainWindowController: NSTouchBarDelegate {
     }
   }
 
+  @objc
   func touchBarPlayBtnAction(_ sender: NSButton) {
     playerCore.togglePause(nil)
   }
 
+  @objc
   func touchBarVolumeAction(_ sender: NSButton) {
     let currVolume = playerCore.info.volume
     playerCore.setVolume(currVolume + (sender.tag == 0 ? 5 : -5))
   }
 
+  @objc
   func touchBarRewindAction(_ sender: NSButton) {
     arrowButtonAction(left: sender.tag == 0)
   }
 
+  @objc
   func touchBarSeekAction(_ sender: NSButton) {
     let sec = sender.tag
     playerCore.seek(relativeSecond: Double(sec), option: .relative)
   }
 
+  @objc
   func touchBarSkipAction(_ sender: NSButton) {
     playerCore.navigateInPlaylist(nextOrPrev: sender.tag == 0)
   }
 
+  @objc 
   func touchBarSliderAction(_ sender: NSSlider) {
     let percentage = 100 * sender.doubleValue / sender.maxValue
     playerCore.seek(percent: percentage)
