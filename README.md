@@ -48,7 +48,7 @@
 
 Theoretically no extra work is needed. _If you are unwilling to use the provided dylibs, follow the instructions below._
 
-**Build with the lastest mpv**
+**Build with the la test mpv**
 
 * Install mpv
 
